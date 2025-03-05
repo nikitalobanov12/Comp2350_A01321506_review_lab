@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		/>
+	</head>
+	<body>
+		<section class="section">
+			<h1 class="title">Reviews for <%= restaurant.name %></h1>
+			<table class="table is-fullwidth">
+				<% reviews.forEach(review => { %>
+				<tr>
+					<td><%= review.details %></td>
+					<td><%= review.reviewer_name %></td>
+					<td><%= review.rating %>/5</td>
+					<td>
+						<a href="/delete-review/<%= review.review_id %>">
+							<i class="fas fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+				<% }) %>
+			</table>
+			<p>There are <%= total %> reviews.</p>
+			<form
+				method="POST"
+				action="/add-review"
+			>
+				
+				<input
+					type="hidden"
+					name="restaurant_id"
+					value="<%= restaurant.restaurant_id %>"
+				/>
+				<input
+					class="input"
+					type="text"
+					name="reviewer_name"
+					placeholder="Your Name"
+					required
+				/>
+				<textarea
+					class="textarea"
+					name="details"
+					placeholder="Review"
+					required
+				></textarea>
+				<input
+					class="input"
+					type="number"
+					name="rating"
+					min="0"
+					max="5"
+					placeholder="Rating (0-5)"
+					required
+				/>
+				<button
+					class="button is-primary"
+					type="submit"
+				>
+					Add
+				</button>
+			</form>
+		</section>
+	</body>
+</html>
