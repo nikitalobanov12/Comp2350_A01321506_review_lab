@@ -7,15 +7,14 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
 
 app.get('/', async (req, res) => {
 	try {
 		const [restaurants] = await pool.query('SELECT * FROM restaurant');
 		res.render('restaurants', { restaurants, total: restaurants.length });
 	} catch (err) {
-		console.error('Error fetching restaurants:', err.message); // Log detailed error
-		res.status(500).send('Database error: ' + err.message); // Show error to client
+		console.error('Error fetching restaurants:', err.message); 
+		res.status(500).send('Database error: ' + err.message); 
 	}
 });
 app.post('/add-restaurant', async (req, res) => {
@@ -34,7 +33,7 @@ app.get('/delete-restaurant/:id', async (req, res) => {
 app.get('/showReviews', async (req, res) => {
 	try {
 		const { id } = req.query;
-		const parsedId = parseInt(id, 10); // Parse the ID
+		const parsedId = parseInt(id, 10); 
 
 		if (isNaN(parsedId)) {
 			throw new Error('Invalid restaurant ID');
